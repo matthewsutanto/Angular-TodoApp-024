@@ -1,0 +1,73 @@
+<form [formGroup]="inputTodoForm" (ngSubmit)="addTodo()">
+  <table>
+    <tr>
+      <div class="form-group">
+        <td style="width:75px;">
+          <label for="Todo">Todo </label>
+        </td>
+        <td>:</td>
+        <td style="width:100px;">
+          <input
+            type="text"
+            name="inputTodo"
+            id="inputTodo"
+            placeholder="Enter todo..."
+            formControlName="inputTodo"
+            (change) = "inputChange()"
+          />
+        </td>
+        <td>
+          <span
+            *ngIf="errors.inputTodo.minlength && isSubmitted"
+            style="color: red"
+          >
+            Minimal input {{ errors.inputTodo?.minlength?.requiredLength }} character
+          </span>
+          <span
+            *ngIf="errors.inputTodo.required && isSubmitted"
+            style="color: red"
+          >
+            Input a text
+          </span>
+        </td>
+      </div>
+    </tr>
+    <tr>
+      <div class="form-group">
+        <td style="width:75px;">
+          <label for="category">Category </label>
+        </td>
+        <td>:</td>
+        <td style="width:190px;">
+          <select
+            class="form-select form-select-sm"
+            name="categoryOption"
+            id="categoryOption"
+            formControlName="categoryOption"
+          >
+            <option value="" selected="selected">--Input here</option>
+            <option *ngFor="let category of categories" [value]="category">
+              {{ category }}
+            </option>
+          </select>
+        </td>
+        <td>
+          <span
+            *ngIf="errors.categoryOption.required && isSubmitted"
+            style="color: red"
+          >
+            Choose a Category
+          </span>
+        </td>
+      </div>
+    </tr>
+    <tr>
+        <div class="form-group">
+            <td colspan="2" style="width:175px;"></td>
+            <td>
+                <input type="submit" value="Add Todo" class="btn btn-primary" />
+            </td>
+        </div>
+    </tr>
+  </table>
+</form>

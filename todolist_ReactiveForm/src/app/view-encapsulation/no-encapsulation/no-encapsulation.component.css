@@ -1,0 +1,7 @@
+.no-encapsulation {
+    color: red;
+}
+
+div.no-encapsulation{
+    border: solid;
+}

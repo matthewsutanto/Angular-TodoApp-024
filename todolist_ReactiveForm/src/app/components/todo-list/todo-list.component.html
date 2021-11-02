@@ -1,0 +1,146 @@
+<app-add-todo-form (newTodoEvent)="addTodo($event)"></app-add-todo-form>
+
+<ol *ngFor="let todo of todos; let i = index" class="list-group">
+  <li
+    *ngIf="todo.isShown"
+    class="list-group-item d-flex justify-content-between align-items-start"
+  >
+    <table>
+      <tr>
+        <div class="ms-3 me-auto">
+          <div class="content {{ todo.completed ? 'done' : '' }}">
+            <td>
+              {{ i + 1 }}
+            </td>
+            <td>.</td>
+            <td style="width: 150px; height: 50px">
+              {{ todo.content }}
+            </td>
+            <td>Category :</td>
+            <td>
+              {{ todo.category }}
+            </td>
+          </div>
+        </div>
+      </tr>
+      <tr>
+        <td colspan="2"></td>
+        <td>
+          <button
+            class="btn btn-warning btn-sm completed"
+            (click)="toggleDone(i)"
+          >
+            <i class="bi bi-check-circle"></i>
+          </button>
+        </td>
+        <td>
+          <button
+            class="btn btn-success btn-sm completed"
+            (click)="toggleUpdate(todo, i)"
+          >
+            <i class="bi bi-pencil"></i>
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-danger btn-sm" (click)="deleteTodo(i)">
+            <i class="bi bi-trash-fill"></i>
+          </button>
+        </td>
+      </tr>
+    </table>
+  </li>
+
+  <li
+    *ngIf="!todo.isShown"
+    class="list-group-item d-flex justify-content-between align-items-start"
+  >
+    <table>
+      <div class="ms-3 me-auto">
+        <form [formGroup]="updateTodoForm" (ngSubmit)="updateDone(i)">
+          <tr>
+            <div class="form-group">
+              <td style="width: 70px">
+                <label for="updateTodo">Todo</label>
+              </td>
+              <td>:</td>
+              <td style="width: 190px">
+                <input
+                  type="text"
+                  name="updateTodo"
+                  id="updateTodo"
+                  value="{{ todo.content }}"
+                  formControlName="updateTodo"
+                />
+              </td>
+              <td>
+                <span
+                  *ngIf="errors.updateTodo.minlength && isSubmitted"
+                  style="color: red"
+                >
+                  Minimal input
+                  {{ errors.updateTodo?.minlength?.requiredLength }}
+                </span>
+                <span
+                  *ngIf="errors.updateTodo.required && isSubmitted"
+                  style="color: red"
+                >
+                  Input a text
+                </span>
+              </td>
+            </div>
+          </tr>
+          <tr>
+            <div class="form-group">
+              <td style="width: 70px">
+                <label for="categoryUpdate">Category </label>
+              </td>
+              <td>:</td>
+              <td style="width: 190px">
+                <select
+                  class="form-select form-select-sm"
+                  name="categoryOptionUpdate"
+                  id="categoryOptionUpdate"
+                  formControlName="categoryOptionUpdate"
+                >
+                  <option value="">--Input here</option>
+                  <option
+                    *ngFor="let category of categories"
+                    value="{{category}}"
+                  >
+                    {{ category }}
+                  </option>
+                </select>
+              </td>
+              <td>
+                <span
+                  *ngIf="errors.categoryOptionUpdate.required && isSubmitted"
+                  style="color: red"
+                >
+                  Choose a Category
+                </span>
+              </td>
+            </div>
+          </tr>
+          <tr>
+            <div class="form-group">
+              <td colspan="2" style="width: 230px"></td>
+              <td>
+                <button class="btn btn-warning btn-sm completed">
+                  <i class="bi bi-check-circle"></i>
+                </button>
+              </td>
+            </div>
+          </tr>
+        </form>
+      </div>
+    </table>
+  </li>
+</ol>
+
+<!-- <button (click)="showList()">
+    show list
+</button>
+
+<button (click)="hideList()">
+    hide list
+</button> -->
