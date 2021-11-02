@@ -16,7 +16,7 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 8080
 
-// app.use(requiredHTTPS);
+app.use(requiredHTTPS);
 // nama app di package.json
 app.use(express.static('./dist/todolist'));
 
